@@ -43,7 +43,7 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Employee> deleteEmployee(@Valid @PathVariable int id) throws GlobalException { // check
+    public ResponseEntity<Employee> deleteEmployee(@Valid @PathVariable int id) throws GlobalException {
         return ResponseEntity.ok().body(employeeService.deleteEmployee(id));
     }
 
