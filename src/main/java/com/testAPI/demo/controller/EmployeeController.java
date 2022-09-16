@@ -6,6 +6,7 @@ import com.testAPI.demo.payload.CreateEmployeeRequest;
 import com.testAPI.demo.payload.UpdateEmployeeRequest;
 import com.testAPI.demo.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +17,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -26,10 +30,11 @@ public class EmployeeController {
 
     private final EmployeeService employeeService;
 
-
     @PostMapping
     public ResponseEntity<Employee> addEmployee(@Valid @RequestBody CreateEmployeeRequest createEmployeeRequest) throws GlobalException {
-        return ResponseEntity.ok().body(employeeService.addEmployee(createEmployeeRequest));
+        Employee employee = employeeService.addEmployee(createEmployeeRequest);
+        URI location = URI.create(String.format("/api/v1/employees/%d", employee.getId()));
+        return ResponseEntity.created(location).body(employee);
     }
 
     @PutMapping
