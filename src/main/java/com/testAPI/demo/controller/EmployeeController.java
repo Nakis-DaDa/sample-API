@@ -6,6 +6,7 @@ import com.testAPI.demo.payload.CreateEmployeeRequest;
 import com.testAPI.demo.payload.UpdateEmployeeRequest;
 import com.testAPI.demo.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +30,7 @@ public class EmployeeController {
 
     private final EmployeeService employeeService;
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Employee> addEmployee(@Valid @RequestBody CreateEmployeeRequest createEmployeeRequest) throws GlobalException {
         Employee employee = employeeService.addEmployee(createEmployeeRequest);
         URI location = URI.create(String.format("/api/v1/employees/%d", employee.getId()));
