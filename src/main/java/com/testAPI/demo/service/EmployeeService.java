@@ -6,6 +6,7 @@ import com.testAPI.demo.payload.CreateEmployeeRequest;
 import com.testAPI.demo.payload.UpdateEmployeeRequest;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface EmployeeService {
 
@@ -13,9 +14,9 @@ public interface EmployeeService {
 
     public Employee updateEmployee(UpdateEmployeeRequest updateEmployeeRequest);
 
-    public Employee getEmployee(int id);
+    public Employee getEmployee(UUID id);
 
-    public Employee deleteEmployee(int id);
+    public Employee deleteEmployee(UUID id);
 
     public List<Employee> getListEmployee();
 

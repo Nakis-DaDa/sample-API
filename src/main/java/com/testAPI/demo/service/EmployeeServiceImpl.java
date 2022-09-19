@@ -10,8 +10,10 @@ import com.testAPI.demo.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,19 +33,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee updateEmployee(UpdateEmployeeRequest updateEmployeeRequest) throws GlobalException {
-        EmployeeEntity employeeEntity = employeeRepository.getReferenceById(updateEmployeeRequest.getId());
+        EmployeeEntity employeeEntity = employeeRepository.findOneById(updateEmployeeRequest.getId());
         if(null == employeeEntity){
             throw new GlobalException("can not find id : " + updateEmployeeRequest.getId());
         }
-        EmployeeEntity employeeEntityToUpdate = employeeRepository.findById(updateEmployeeRequest.getId()).get();
+        EmployeeEntity employeeEntityToUpdate = employeeRepository.findOneById(updateEmployeeRequest.getId());
         employeeEntityToUpdate.updateEmployeeEntity(employeeMapper.fromUpdateEmployeeRequest(updateEmployeeRequest));
         employeeRepository.save(employeeEntityToUpdate);
         return employeeMapper.fromEmployee(employeeEntityToUpdate);
     }
 
     @Override
-    public Employee getEmployee(int id) {
-        EmployeeEntity employeeEntity = employeeRepository.getReferenceById(id);
+    public Employee getEmployee(UUID id) {
+        EmployeeEntity employeeEntity = employeeRepository.findOneById(id);
         if(null == employeeEntity){
             throw new GlobalException("can not find id : " + id);
         }
@@ -51,8 +53,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee deleteEmployee(int id) {
-        EmployeeEntity employeeEntity = employeeRepository.getReferenceById(id);
+    @Transactional
+    public Employee deleteEmployee(UUID id) {
+        EmployeeEntity employeeEntity = employeeRepository.findOneById(id);
         if(null == employeeEntity){
             throw new GlobalException("can not find id : " + id);
         }

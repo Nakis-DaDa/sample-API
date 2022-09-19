@@ -6,12 +6,13 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.UUID;
 
 @Data
 public class UpdateEmployeeRequest {
 
     @NotNull(message ="id cannot be null")
-    private int id;
+    private UUID id;
 
     @NotNull(message ="Firstname cannot be null")
     @Size(min = 1, max = 45, message = "Firstname must be between 1 and 45 characters")

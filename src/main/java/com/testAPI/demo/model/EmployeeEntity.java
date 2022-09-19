@@ -20,6 +20,7 @@ public class EmployeeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @org.hibernate.annotations.Type(type="org.hibernate.type.UUIDCharType")
     @Column(name="id")
     private UUID id;
     @Column(name="first_name")

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.UUID;
 
 
 @RestController
@@ -33,7 +34,7 @@ public class EmployeeController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Employee> addEmployee(@Valid @RequestBody CreateEmployeeRequest createEmployeeRequest) throws GlobalException {
         Employee employee = employeeService.addEmployee(createEmployeeRequest);
-        URI location = URI.create(String.format("/api/v1/employees/%d", employee.getId()));
+        URI location = URI.create(String.format("/api/v1/employees/%s", employee.getId()));
         return ResponseEntity.created(location).body(employee);
     }
 
@@ -43,12 +44,12 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Employee> getEmployee(@Valid @PathVariable int id) throws GlobalException {
+    public ResponseEntity<Employee> getEmployee(@Valid @PathVariable UUID id) throws GlobalException {
         return ResponseEntity.ok().body(employeeService.getEmployee(id));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Employee> deleteEmployee(@Valid @PathVariable int id) throws GlobalException {
+    public ResponseEntity<Employee> deleteEmployee(@Valid @PathVariable UUID id) throws GlobalException {
         return ResponseEntity.ok().body(employeeService.deleteEmployee(id));
     }
 
