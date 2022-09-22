@@ -1,9 +1,10 @@
 package com.testAPI.demo.controller;
 
 import com.testAPI.demo.exception.GlobalException;
-import com.testAPI.demo.model.Employee;
-import com.testAPI.demo.payload.CreateEmployeeRequest;
-import com.testAPI.demo.payload.UpdateEmployeeRequest;
+import com.testAPI.demo.object.model.Employee;
+import com.testAPI.demo.payload.request.CreateEmployeeRequest;
+import com.testAPI.demo.payload.request.UpdateEmployeeRequest;
+import com.testAPI.demo.payload.response.EmployeeResponse;
 import com.testAPI.demo.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -34,7 +35,7 @@ public class EmployeeController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Employee> addEmployee(@Valid @RequestBody CreateEmployeeRequest createEmployeeRequest) throws GlobalException {
         Employee employee = employeeService.addEmployee(createEmployeeRequest);
-        URI location = URI.create(String.format("/api/v1/employees/%s", employee.getId()));
+        URI location = URI.create(String.format("/api/v1/employees/%s", employee.getEmployeeId()));
         return ResponseEntity.created(location).body(employee);
     }
 
@@ -54,7 +55,7 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Employee>> getListEmployee() throws GlobalException {
+    public ResponseEntity<List<EmployeeResponse>> getListEmployee() throws GlobalException {
         return ResponseEntity.ok().body(employeeService.getListEmployee());
     }
 

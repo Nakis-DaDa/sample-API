@@ -1,6 +1,6 @@
 package com.testAPI.demo.exception;
 
-import com.testAPI.demo.payload.ExceptionResponse;
+import com.testAPI.demo.payload.response.ExceptionResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

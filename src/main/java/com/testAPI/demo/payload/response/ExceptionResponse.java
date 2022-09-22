@@ -1,4 +1,4 @@
-package com.testAPI.demo.payload;
+package com.testAPI.demo.payload.response;
 
 import lombok.Data;
 
@@ -9,7 +9,6 @@ public class ExceptionResponse {
 
     private String errorMessage;
     private String requestedURI;
-
 
     public void callerURL(final String requestedURI) {
         this.requestedURI = requestedURI;
