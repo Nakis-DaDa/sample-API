@@ -24,9 +24,4 @@ public interface CompanyService {
 
     public List<CompanyResponse> getListCompany();
 
-    public Company convertCompany(CompanyEntity companyEntity);
-    public CompanyResponse convertToResponse(Company company);
-
-    public AddressEntity getAddress(CreateCompanyRequest createCompanyRequest);
-
 }

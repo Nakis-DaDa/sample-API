@@ -11,13 +11,13 @@ import java.util.UUID;
 
 public interface EmployeeService {
 
-    public Employee addEmployee(CreateEmployeeRequest createEmployeeRequest);
+    public EmployeeResponse addEmployee(CreateEmployeeRequest createEmployeeRequest);
 
-    public Employee updateEmployee(UpdateEmployeeRequest updateEmployeeRequest);
+    public EmployeeResponse updateEmployee(UpdateEmployeeRequest updateEmployeeRequest);
 
-    public Employee getEmployee(UUID id);
+    public EmployeeResponse getEmployee(UUID id);
 
-    public Employee deleteEmployee(UUID id);
+    public EmployeeResponse deleteEmployee(UUID id);
 
     public List<EmployeeResponse> getListEmployee();
 

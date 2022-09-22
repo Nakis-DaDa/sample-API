@@ -82,18 +82,13 @@ public class CompanyServiceImpl implements CompanyService{
         return companyList.stream().map(this::convertToResponse).collect(Collectors.toList());
     }
 
-    @Override
-    public Company convertCompany(CompanyEntity companyEntity) {
+    private Company convertCompany(CompanyEntity companyEntity) {
         return companyMapper.fromEntity(companyEntity);
     }
 
-    @Override
-    public CompanyResponse convertToResponse(Company company) {
-        return companyMapper.toRespone(company);
-    }
+    private CompanyResponse convertToResponse(Company company) { return companyMapper.toRespone(company);}
 
-    @Override
-    public AddressEntity getAddress(CreateCompanyRequest createCompanyRequest){
+    private AddressEntity getAddress(CreateCompanyRequest createCompanyRequest){
         AddressEntity addressEntity;
         if(null == createCompanyRequest.getAddress().getAddressId()){
             if (createCompanyRequest.getAddress().getStreetAddress() == null ||

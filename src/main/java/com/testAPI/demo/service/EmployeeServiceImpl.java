@@ -31,18 +31,18 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final AddressRepository addressRepository;
 
     @Override
-    public Employee addEmployee(CreateEmployeeRequest createEmployeeRequest) {
+    public EmployeeResponse addEmployee(CreateEmployeeRequest createEmployeeRequest) {
             EmployeeEntity employeeEntity = employeeMapper.toEntity(employeeMapper.fromCreateEmployeeRequest(createEmployeeRequest));
             CompanyEntity companyEntity = companyRepository.findOneByCompanyId(createEmployeeRequest.getCompanyId());
             if(null == companyEntity){
                 throw new GlobalException("can not find company id : " + createEmployeeRequest.getCompanyId());
             }
             employeeRepository.save(employeeEntity);
-            return employeeMapper.fromEmployee(employeeEntity);
+            return convertToResponse(employeeMapper.fromEmployee(employeeEntity));
     }
 
     @Override
-    public Employee updateEmployee(UpdateEmployeeRequest updateEmployeeRequest) throws GlobalException {
+    public EmployeeResponse updateEmployee(UpdateEmployeeRequest updateEmployeeRequest) throws GlobalException {
         EmployeeEntity employeeEntity = employeeRepository.findOneByEmployeeId(updateEmployeeRequest.getEmployeeId());
         if(null == employeeEntity){
             throw new GlobalException("can not find id : " + updateEmployeeRequest.getEmployeeId());
@@ -50,28 +50,28 @@ public class EmployeeServiceImpl implements EmployeeService {
         EmployeeEntity employeeEntityToUpdate = employeeRepository.findOneByEmployeeId(updateEmployeeRequest.getEmployeeId());
         employeeEntityToUpdate.updateEmployeeEntity(employeeMapper.fromUpdateEmployeeRequest(updateEmployeeRequest));
         employeeRepository.save(employeeEntityToUpdate);
-        return employeeMapper.fromEmployee(employeeEntityToUpdate);
+        return convertToResponse(employeeMapper.fromEmployee(employeeEntityToUpdate));
     }
 
     @Override
-    public Employee getEmployee(UUID id) {
+    public EmployeeResponse getEmployee(UUID id) {
         EmployeeEntity employeeEntity = employeeRepository.findOneByEmployeeId(id);
         if(null == employeeEntity){
             throw new GlobalException("can not find id : " + id);
         }
-        return employeeMapper.fromEmployee(employeeEntity);
+        return convertToResponse(employeeMapper.fromEmployee(employeeEntity));
     }
 
     @Override
     @Transactional
-    public Employee deleteEmployee(UUID id) {
+    public EmployeeResponse deleteEmployee(UUID id) {
         EmployeeEntity employeeEntity = employeeRepository.findOneByEmployeeId(id);
         if(null == employeeEntity){
             throw new GlobalException("can not find id : " + id);
         }
         Employee employee = employeeMapper.fromEmployee(employeeEntity);
         employeeRepository.deleteByEmployeeId(id);
-        return employee;
+        return convertToResponse(employee);
     }
 
     @Override

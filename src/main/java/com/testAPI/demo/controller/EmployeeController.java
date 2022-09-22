@@ -33,24 +33,24 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Employee> addEmployee(@Valid @RequestBody CreateEmployeeRequest createEmployeeRequest) throws GlobalException {
-        Employee employee = employeeService.addEmployee(createEmployeeRequest);
-        URI location = URI.create(String.format("/api/v1/employees/%s", employee.getEmployeeId()));
-        return ResponseEntity.created(location).body(employee);
+    public ResponseEntity<EmployeeResponse> addEmployee(@Valid @RequestBody CreateEmployeeRequest createEmployeeRequest) throws GlobalException {
+        EmployeeResponse employeeResponse = employeeService.addEmployee(createEmployeeRequest);
+        URI location = URI.create(String.format("/api/v1/employees/%s", employeeResponse.getEmployeeId()));
+        return ResponseEntity.created(location).body(employeeResponse);
     }
 
     @PutMapping
-    public ResponseEntity<Employee> updateEmployee(@Valid @RequestBody UpdateEmployeeRequest updateEmployeeRequest) throws GlobalException {
+    public ResponseEntity<EmployeeResponse> updateEmployee(@Valid @RequestBody UpdateEmployeeRequest updateEmployeeRequest) throws GlobalException {
         return ResponseEntity.ok().body(employeeService.updateEmployee(updateEmployeeRequest));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Employee> getEmployee(@Valid @PathVariable UUID id) throws GlobalException {
+    public ResponseEntity<EmployeeResponse> getEmployee(@Valid @PathVariable UUID id) throws GlobalException {
         return ResponseEntity.ok().body(employeeService.getEmployee(id));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Employee> deleteEmployee(@Valid @PathVariable UUID id) throws GlobalException {
+    public ResponseEntity<EmployeeResponse> deleteEmployee(@Valid @PathVariable UUID id) throws GlobalException {
         return ResponseEntity.ok().body(employeeService.deleteEmployee(id));
     }
 
