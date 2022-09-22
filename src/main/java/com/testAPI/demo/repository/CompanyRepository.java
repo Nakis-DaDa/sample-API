@@ -9,4 +9,6 @@ import java.util.UUID;
 @Repository
 public interface CompanyRepository extends JpaRepository<CompanyEntity,UUID>{
     CompanyEntity findOneByCompanyId(UUID company_id);
+
+    void deleteByCompanyId(UUID id);
 }
